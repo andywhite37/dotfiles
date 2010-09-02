@@ -1,0 +1,22 @@
+[user]
+	name = Andy White
+	email = greatwhitehope@gmail.com
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+[core]
+	editor = 'c:/program files/vim/vim72/gvim.exe'
+
+[merge]
+    tool = diffmerge
+
+[mergetool "diffmerge"]
+    cmd = \"C:/Program Files/git/cmd/git-diffmerge-merge.sh\" \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+    trustExitCode = false
+
+[diff]
+    external = \"c:/Program Files/git/cmd/git-diffmerge-diff.sh\"
+[gui]
+	recentrepo = C:/Home/git/andytest
