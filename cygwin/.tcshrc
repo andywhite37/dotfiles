@@ -1,0 +1,139 @@
+# .tcshrc
+
+# Add to path (only for cygwin command-line use)
+#setenv PATH     ".:/cygdrive/c/Home/cygbin/:${HOME}/bin:${PATH}"
+#setenv PATH     ".:${PATH}"
+if ("${PATH}" !~ "${HOME}/bin"*) then
+    setenv PATH     "${HOME}/bin:${PATH}"
+endif
+
+setenv HOME '/users/awhite'
+setenv DROPBOX '/cygdrive/c/Home/My Dropbox'
+
+# Set the Java CLASSPATH for Cygwin cmd-line use
+#setenv J2EE_HOME    'C:\Java\SDK'
+#setenv CLASSPATH    ".;${J2EE_HOME}\\lib\\j2ee.jar;${J2EE_HOME}\\lib\\locale"
+
+# Set prompt
+set red =    '%{\033[31;1m%]}'
+set yellow = '%{\033[33;1m%]}'
+set blue =   '%{\033[34;1m%]}'
+set none =   '%{\033[0m%]}'
+
+if ($?tcsh) then
+    #set prompt='%B[%n@%m %~]$%b '
+    set prompt='%B[%{\033[31;1m%}%n%{\033[0m%}][%{\033[34;1m%}%~%{\033[0m%}][%{\033[31;1m%}%p%{\033[0m%}][%{\033[33;1m%}%h%{\033[0m%}]>%b '
+    #set prompt='%B[${red}%n @ %m${none}][${blue}%~${none}][${yellow}%h${none}>%b '
+else
+    set prompt=\[`id -un`@`hostname`\]\$\ 
+endif
+
+# Shell settings
+set     autocorrect=1
+set     autolist=ambiguous
+unset   autologout
+#set     complete=enhance
+set     correct=cmd
+set     echo_style=both
+#set     ellipsis
+set     fignore=(.o \~)
+#set     histdup=erase
+set     history=100
+unset   ignoreeof
+set     listjobs=long
+set     listmaxrows=23
+#set     noglob
+set     notify=1
+set     rmstar=1
+set     noding
+#set    savehist=( $history merge )
+#set    showdots=1
+#set    symlinks=expand
+#set     cdpath='~/My\ Documents/Visual\ Studio\ Projects/'
+
+alias precmd 'echo'
+
+# Completions
+
+complete man 'p/*/c/'
+complete where 'p/*/c/'
+complete which 'p/*/c/'
+
+# Shell shortcuts
+
+# Note: Windows gvim can't resolve cygwin style paths (without using
+# cygpath...), so to edit a file that is outside the current directory you must
+# cd to the directory of the desired file then edit it.  (I'm not using the
+# cygwin distro's gvim because it requires an X server, which I refuse to do...)
+
+alias gvim                '/cygdrive/c/Program\ Files/Vim/vim72/gvim.exe \!* &'
+
+### Environment file shortcuts
+alias ee                  'pushd ~ ; gvim .tcshrc ; popd'
+alias se                  'source ~/.tcshrc'
+
+set cygpath_vim_home = `cygpath "${VIM_HOME}"`
+alias ev                  'pushd "${cygpath_vim_home}" ; gvim vimrc_example.vim ; popd'
+
+### ls shortcuts
+alias lf                  'ls --color'
+alias la                  'lf -a'
+alias ll                  'lf -l'
+alias lla                 'lf -la'
+alias llrt                'lf -lart'
+alias l1                  'lf -a1'
+
+### cd shortcuts
+alias up                  'cd ../\!*'
+alias up2                 'cd ../../\!*'
+alias up3                 'cd ../../../\!*'
+alias up4                 'cd ../../../../\!*'
+alias up5                 'cd ../../../../../\!*'
+alias up6                 'cd ../../../../../../\!*'
+alias back                'cd -'
+
+alias c                   'cd /cygdrive/c/'
+alias z                   'cd /cygdrive/z/'
+
+# I'm doing some weird cd hopping because it's difficult to escape the spaces
+# in the win32 paths when setting aliases
+
+alias home                'cd /cygdrive/c/Home'
+alias mydocs              'cd /cygdrive/c/Documents\ and\ Settings/awhite/My\ Documents/'
+alias docs                'mydocs'
+alias desktop             'cd /cygdrive/c/Documents\ and\ Settings/awhite/Desktop/'
+alias temp                'cd /cygdrive/c/TEMP'
+alias prog                'cd /cygdrive/c/Program\ Files'
+#alias workspace           'cd /cygdrive/c/Home/workspace'     
+alias tfs                 'cd /cygdrive/c/TFS'
+
+alias eamcore             'cd /cygdrive/c/TFS/Partner\ -\ Infor/Trunk/EamCore/Trunk/'
+
+alias eamwork             'cd /cygdrive/c/TFS/Partner\ -\ Infor/Trunk/EamWork/Trunk/'
+alias eamworkserver       'eamwork; cd Construction/Server/Source'
+alias eamworkmobile       'eamwork; cd Construction/Mobile/Source'
+alias eamworkdatabase     'eamwork; cd Construction/Database'
+alias eamworkdupage       'cd /cygdrive/c/TFS/Partner\ -\ Infor/Trunk/EamWork/Branches/Dupage/Trunk/'
+
+alias eaminv              'cd /cygdrive/c/TFS/Partner\ -\ Infor/Trunk/EamInventory/Trunk/'
+alias eaminventory        'eaminv'
+
+### Other shell shortcuts
+alias ddown               "tr ':' '\n' | tr ';' '\n'"
+
+alias p                   'less -fiMQ'
+
+alias h                   'history'
+
+alias rgrep               'find . -print |& grep -v -i "\.dll" |& grep -v -i "\.exe" |& xargs grep \!* |& grep -v "grep:" |& grep -v "Binary file.*matches" | grep -v "\.svn"'
+#alias rgrep               'recursiveGrep.pl'
+
+alias srch                'find . -print | grep \!*'
+
+# Extra just the filenames from grep output
+alias grepfiles           'cut -d: -f1 | grep -v "Binary file" | sort | uniq'
+
+# Remove various uninteresting things from grep output
+alias nocomments          "grep -v ':[[:space:]]*//'" 
+alias nobin               "grep -v 'grep:' | grep -v 'Binary file'"
+alias nows                "noWhitespace.pl"
