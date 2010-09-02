@@ -1,0 +1,19 @@
+[user]
+    name = Andy White
+    email = greatwhitehope@gmail.com
+
+[color]
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
+
+[merge]
+    tool = diffmerge
+
+[mergetool "diffmerge"]
+    cmd = \"/Users/andy/bin/git-diffmerge-merge.sh\" \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+    trustExitCode = false
+
+[diff]
+    external = \"/Users/andy/bin/git-diffmerge-diff.sh\"
